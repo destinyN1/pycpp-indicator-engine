@@ -7,6 +7,16 @@ def simple_moving_average(data, window_size):
     return sma
 
     
-def import_close_prices(file_path='/home/destiny/Programming/pycpp-indicator-engine/close_prices.csv'):
-    close_prices = np.loadtxt(file_path, delimiter=',')
-    return close_prices
+def import_close_prices(file_path):
+    #read numpy array from npy file
+    close_prices_averaged = np.load(file_path)
+    return close_prices_averaged
+   
+
+
+
+
+if __name__ == "__main__":
+    close_prices_averaged = import_close_prices('/home/destiny/Programming/pycpp-indicator-engine/close_prices.npy')
+    sma_10 = simple_moving_average(close_prices_averaged, 5)
+    print("Simple Moving Average (10):", sma_10)
