@@ -18,5 +18,5 @@ def import_close_prices(file_path):
 
 if __name__ == "__main__":
     close_prices_averaged = import_close_prices('/home/destiny/Programming/pycpp-indicator-engine/close_prices.npy')
-    sma_10 = simple_moving_average(close_prices_averaged, 5)
+    sma_10 = simple_moving_average(close_prices_averaged, 10)
     print("Simple Moving Average (10):", sma_10)
