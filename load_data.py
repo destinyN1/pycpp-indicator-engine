@@ -14,8 +14,8 @@ def create_close_price_array(): #put variable path here
                 close_writer = csv.writer(close_file)
                 close_writer.writerow([row[4]])
      
-def create_close_price_numpy_array(): #this function needs to be imported into the next part of the flow
-    close_prices = np.loadtxt('/home/destiny/Programming/close_prices.csv', delimiter=',')
+def create_close_price_numpy_array(): #this function needs to be imported into the next part of the flow #variable file path here as well for cli tool
+    close_prices = np.loadtxt('/home/destiny/Programming/close_prices.csv', delimiter=',') 
     np.save('/home/destiny/Programming/close_prices.npy', close_prices)
     print(close_prices)
     return close_prices
