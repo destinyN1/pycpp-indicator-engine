@@ -1,23 +1,31 @@
 import numpy as np
 #implement a simple moving average indicator
+#import function from loadata.py (create_close_price_numpy_array)
+
+
 def simple_moving_average(data, window_size):
+    #import close prices here
     
     weights = np.ones(window_size) / window_size
     sma = np.convolve(data, weights, mode='valid')
     return sma
 
 def exponential_moving_average(data, window_size):
+    #import close prices here as well (call the import close prices function)
+    
     ema = np.zeros_like(data)
     alpha = 2 / (window_size + 1)
     ema[0] = data[0]
     for i in range(1, len(data)):
         ema[i] = alpha * data[i] + (1 - alpha) * ema[i - 1]
     return ema
-    
+
+#import close prices here to have them returned
 def import_close_prices(file_path):
+    
     #read numpy array from npy file
-    close_prices_averaged = np.load(file_path)
-    return close_prices_averaged
+    close_prices = np.load(file_path)
+    return close_prices
    
 
 def plot_close_prices_vs_sma(close_prices, sma):
@@ -51,10 +59,10 @@ def compare_lengths_sma_close_prices(close_prices, sma):
 
 if __name__ == "__main__":
     close_prices_averaged = import_close_prices('/home/destiny/Programming/pycpp-indicator-engine/close_prices.npy')
-    sma_fast= simple_moving_average(close_prices_averaged, 10)
-    sma_slow= simple_moving_average(close_prices_averaged, 100)
-    ema_fast= exponential_moving_average(close_prices_averaged, 10)
-    ema_slow= exponential_moving_average(close_prices_averaged, 100)
+    sma_fast= simple_moving_average(close_prices, 10)
+    sma_slow= simple_moving_average(close_prices, 100)
+    ema_fast= exponential_moving_average(close_prices, 10)
+    ema_slow= exponential_moving_average(close_prices, 100)
     #save sma_10/ema_10 to a npy file
     np.save('/home/destiny/Programming/pycpp-indicator-engine/sma_fast.npy', sma_fast)
     np.save('/home/destiny/Programming/pycpp-indicator-engine/ema_fast.npy', ema_fast)
