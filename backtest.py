@@ -88,7 +88,26 @@ def plot_positions_over_time(positions, title="Positions Over Time"):
     plt.tight_layout()
     plt.show()
 
-    
+def compute_equity_curve(prices, positions, initial_capital=1000.0):
+    equity = [initial_capital]
+
+    n = min(len(prices), len(positions))  # align lengths
+    for i in range(1, n):
+        ret = (prices[i] - prices[i-1]) / prices[i-1]
+        position = positions[i-1]  # now guaranteed valid
+        equity.append(equity[-1] * (1 + ret * position))
+
+    return equity
+
+def plot_equity_curve(equity):
+    import matplotlib.pyplot as plt
+    plt.figure(figsize=(12,6))
+    plt.plot(equity, label='Equity Curve')
+    plt.xlabel('Time Index')
+    plt.ylabel('Equity')
+    plt.title('Equity Curve Over Time')
+    plt.legend()
+    plt.show()
     
 
 if __name__ == "__main__":
@@ -98,27 +117,35 @@ if __name__ == "__main__":
     #import close prices
     close_prices = np.load('./close_prices.npy')
 
+    #compute positions based on signals
     sma_positions = compute_positions(sma_signals)
-    # print("Positions based on SMA signals:", sma_positions)
     ema_positions = compute_positions(ema_signals)
-    # print("Positions based on EMA signals:", ema_positions)
 
+    equity_sma = compute_equity_curve(close_prices, sma_positions)
+    equity_ema = compute_equity_curve(close_prices, ema_positions)
+    plot_equity_curve(equity_sma)
+    plot_equity_curve(equity_ema)
+
+    #compute simple returns
     sma_simple_returns = compute_simple_returns(close_prices)
-    #print("SMA Simple Returns:", sma_simple_returns)
     ema_simple_returns = compute_simple_returns(close_prices)
-    #("EMA Simple Returns:", ema_simple_returns)
 
+    #compute log returns
     sma_log_returns = compute_log_returns(close_prices)
     ema_log_returns = compute_log_returns(close_prices)
 
+    #add up returns
     total_sma_simple_return = addup_simmple_returns(sma_simple_returns)
     total_sma_log_return = addup_log_returns(sma_log_returns)
     total_ema_simple_return = addup_simmple_returns(ema_simple_returns)
     total_ema_log_return = addup_log_returns(ema_log_returns)
+    
+    #print total returns for SMA and EMA
     print(f"Total SMA Simple Return: {total_sma_simple_return}")
     print(f"Total SMA Log Return: {total_sma_log_return}")
     print(f"Total EMA Simple Return: {total_ema_simple_return}")
     print(f"Total EMA Log Return: {total_ema_log_return}")
 
+    #plot positions over time
     plot_positions_over_time(sma_positions)
     plot_positions_over_time(ema_positions)
