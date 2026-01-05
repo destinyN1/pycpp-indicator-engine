@@ -32,6 +32,7 @@ def import_close_prices(file_path):
     return close_prices
    
 
+
 def plot_close_prices_vs_sma(close_prices, sma):
     import matplotlib.pyplot as plt
     plt.figure(figsize=(12,6))
@@ -49,23 +50,29 @@ def plot_close_prices_vs_ema(close_prices, ema):
     plt.show()
 
 
-
-if __name__ == "__main__":
-    close_prices = import_close_prices('/home/destiny/Programming/Kraken_OHLCVT/1INCHEUR_1440.csv') 
+def run_indicators():
+    close_prices = import_close_prices('/home/destiny/Programming/Kraken_OHLCVT/1INCHEUR_1440.csv')
     sma_fast= simple_moving_average(close_prices, 10) #sma_fast/slow, ema_fast/slow functions need to be imported into strategy.py
     sma_slow= simple_moving_average(close_prices, 100)
     ema_fast= exponential_moving_average(close_prices, 10)
     ema_slow= exponential_moving_average(close_prices, 100)
+
+    return close_prices, sma_fast, sma_slow, ema_fast, ema_slow
+
+if __name__ == "__main__":
+    close_prices, sma_fast, sma_slow, ema_fast, ema_slow = run_indicators()  
+
+
     #save sma_10/ema_10 to a npy file
     np.save('/home/destiny/Programming/pycpp-indicator-engine/sma_fast.npy', sma_fast)
     np.save('/home/destiny/Programming/pycpp-indicator-engine/ema_fast.npy', ema_fast)
     np.save('/home/destiny/Programming/pycpp-indicator-engine/sma_slow.npy', sma_slow)
     np.save('/home/destiny/Programming/pycpp-indicator-engine/ema_slow.npy', ema_slow)
     
-    # plot_close_prices_vs_sma(close_prices, sma_fast)
-    # plot_close_prices_vs_ema(close_prices, ema_fast)
-    # plot_close_prices_vs_sma(close_prices, sma_slow)
-    # plot_close_prices_vs_ema(close_prices, ema_slow)
+    plot_close_prices_vs_sma(close_prices, sma_fast)
+    plot_close_prices_vs_ema(close_prices, ema_fast)
+    plot_close_prices_vs_sma(close_prices, sma_slow)
+    plot_close_prices_vs_ema(close_prices, ema_slow)
   
   
   
