@@ -26,7 +26,8 @@ def run_strategy(file_path):
 import indicators
 
 if __name__ == "__main__":
-    close_prices, sma_fast, sma_slow, ema_fast, ema_slow = indicators.run_indicators('/home/destiny/Programming/Kraken_OHLCVT/1INCHEUR_1440.csv')    
+    #close_prices, sma_fast, sma_slow, ema_fast, ema_slow = indicators.run_indicators('/home/destiny/Programming/Kraken_OHLCVT/1INCHEUR_1440.csv')  
+    close_prices, sma_fast, sma_slow, ema_fast, ema_slow = run_strategy('/home/destiny/Programming/Kraken_OHLCVT/1INCHEUR_1440.csv')  
     sma_signals = moving_average_crossover_strategy(sma_fast, sma_slow)
     ema_signals = moving_average_crossover_strategy(ema_fast, ema_slow)
 
