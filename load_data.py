@@ -1,12 +1,6 @@
 import csv
 import numpy as np
 
-#/home/destiny/Programming/Kraken_OHLCVT/1INCHEUR_1440.csv
-
-#save to a seperate file
-            # with open('/home/destiny/Programming/close_prices.csv', 'a') as close_file:
-            #     close_writer = csv.writer(close_file)
-            #     close_writer.writerow([row[4]])
      
 def create_close_price_array(file_path): #put variable path here
     with open(file_path, 'r') as file:
