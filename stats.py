@@ -46,8 +46,8 @@ def compute_sharpe_ratio(returns, risk_free_rate=0.0):
     sharpe_ratio = avg_excess_return / std_dev
     return sharpe_ratio
 
-def run_full_strategy(file_path):
-    close_prices, sma_fast, sma_slow, ema_fast, ema_slow = strategy.run_strategy(file_path)
+def run_full_strategy(file_path, fast, slow):
+    close_prices, sma_fast, sma_slow, ema_fast, ema_slow = strategy.run_strategy(file_path, fast, slow)
 
     sma_signals = strategy.moving_average_crossover_strategy(sma_fast, sma_slow)
     ema_signals = strategy.moving_average_crossover_strategy(ema_fast, ema_slow)
@@ -132,7 +132,13 @@ def run_full_strategy(file_path):
 
 
 if __name__ == "__main__":   
-    file_path = '/home/destiny/Programming/Kraken_OHLCVT/1INCHEUR_1440.csv'
-    close_prices, sma_fast, sma_slow, ema_fast, ema_slow = run_full_strategy(file_path)
+    import sys
+    if len(sys.argv) != 4:
+        print("Usage: python stats.py <csv_path> <fast> <slow>")
+        sys.exit(1)
+    file_path = sys.argv[1]
+    fast = int(sys.argv[2])
+    slow = int(sys.argv[3])
+    run_full_strategy(file_path, fast, slow)
     
     

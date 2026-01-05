@@ -19,8 +19,8 @@ def moving_average_crossover_strategy(fast_ma, slow_ma):
 
     return signals
 
-def run_strategy(file_path):
-    close_prices, sma_fast, sma_slow, ema_fast, ema_slow =indicators.run_indicators(file_path)
+def run_strategy(file_path, fast, slow):
+    close_prices, sma_fast, sma_slow, ema_fast, ema_slow =indicators.run_indicators(file_path, fast, slow)
     return close_prices, sma_fast, sma_slow, ema_fast, ema_slow
 
 import indicators

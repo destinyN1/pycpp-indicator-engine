@@ -53,7 +53,7 @@ def plot_close_prices_vs_ema(close_prices, ema):
 fast = 10
 slow = 100
 
-def run_indicators(file_path):
+def run_indicators(file_path, fast, slow):
     close_prices = import_close_prices(file_path) #needs to be chnaged to variable path for cli tool
     sma_fast= simple_moving_average(close_prices, fast) #sma_fast/slow, ema_fast/slow functions need to be imported into strategy.py
     sma_slow= simple_moving_average(close_prices, slow)
