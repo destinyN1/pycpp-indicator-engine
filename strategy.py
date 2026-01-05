@@ -19,13 +19,10 @@ def moving_average_crossover_strategy(fast_ma, slow_ma):
 
     return signals
 
+import indicators
 
 if __name__ == "__main__":
-    sma_fast = np.load('/home/destiny/Programming/pycpp-indicator-engine/sma_fast.npy')
-    sma_slow = np.load('/home/destiny/Programming/pycpp-indicator-engine/sma_slow.npy')
-    ema_fast = np.load('/home/destiny/Programming/pycpp-indicator-engine/ema_fast.npy')
-    ema_slow = np.load('/home/destiny/Programming/pycpp-indicator-engine/ema_slow.npy')
-
+    close_prices, sma_fast, sma_slow, ema_fast, ema_slow = indicators.run_indicators()    
     sma_signals = moving_average_crossover_strategy(sma_fast, sma_slow)
     ema_signals = moving_average_crossover_strategy(ema_fast, ema_slow)
 
