@@ -99,15 +99,58 @@ def compute_equity_curve(prices, positions, initial_capital=1000.0):
 
     return equity
 
-def plot_equity_curve(equity):
+def plot_equity_curve(equity, title=None):
+    import numpy as np
     import matplotlib.pyplot as plt
-    plt.figure(figsize=(12,6))
-    plt.plot(equity, label='Equity Curve')
-    plt.xlabel('Time Index')
-    plt.ylabel('Equity')
-    plt.title('Equity Curve Over Time')
-    plt.legend()
+    from matplotlib.ticker import FuncFormatter, MaxNLocator
+    from scipy.interpolate import make_interp_spline
+
+    equity = np.asarray(equity, dtype=float)
+
+    fig, ax = plt.subplots(figsize=(9, 5.5), dpi=100)
+
+    # Create smooth curve using spline interpolation
+    x = np.arange(len(equity))
+    
+    # Use spline interpolation for smoothness
+    # k=3 gives cubic spline (smooth curves)
+    if len(equity) > 3:  # Need at least 4 points for cubic spline
+        x_smooth = np.linspace(x.min(), x.max(), len(equity) * 10)
+        spl = make_interp_spline(x, equity, k=3)
+        equity_smooth = spl(x_smooth)
+    else:
+        x_smooth = x
+        equity_smooth = equity
+
+    # Line with antialiasing for smooth rendering
+    ax.plot(x_smooth, equity_smooth, linewidth=2, antialiased=True)
+
+    # Only horizontal dashed gridlines
+    ax.grid(True, axis="y", linestyle="--", linewidth=0.8, alpha=0.45)
+    ax.grid(False, axis="x")
+
+    # Nice y-axis ticks + comma formatting (e.g., 350,000)
+    ax.yaxis.set_major_locator(MaxNLocator(nbins=12))
+    ax.yaxis.set_major_formatter(FuncFormatter(lambda x, pos: f"{int(x):,}"))
+
+    # Keep the plot clean: no top/right spines
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+
+    # Minimal labels (the example has no labels)
+    if title:
+        ax.set_title(title)
+
+    ax.set_xlabel("")  # match screenshot (no x label)
+    ax.set_ylabel("")  # match screenshot (no y label)
+
+    # Optional: small margins so the line doesn't touch edges
+    ax.margins(x=0.01, y=0.05)
+
+    plt.tight_layout()
     plt.show()
+
+
     
 
 if __name__ == "__main__":
