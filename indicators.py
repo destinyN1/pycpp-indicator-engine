@@ -49,13 +49,16 @@ def plot_close_prices_vs_ema(close_prices, ema):
     plt.legend()
     plt.show()
 
+#varibles for fast and slow ma, will be set in cli tool later
+fast = 10
+slow = 100
 
 def run_indicators(file_path):
     close_prices = import_close_prices(file_path) #needs to be chnaged to variable path for cli tool
-    sma_fast= simple_moving_average(close_prices, 10) #sma_fast/slow, ema_fast/slow functions need to be imported into strategy.py
-    sma_slow= simple_moving_average(close_prices, 100)
-    ema_fast= exponential_moving_average(close_prices, 10)
-    ema_slow= exponential_moving_average(close_prices, 100)
+    sma_fast= simple_moving_average(close_prices, fast) #sma_fast/slow, ema_fast/slow functions need to be imported into strategy.py
+    sma_slow= simple_moving_average(close_prices, slow)
+    ema_fast= exponential_moving_average(close_prices, fast)
+    ema_slow= exponential_moving_average(close_prices, slow)
 
     return close_prices, sma_fast, sma_slow, ema_fast, ema_slow
 
