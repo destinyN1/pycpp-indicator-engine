@@ -1,6 +1,10 @@
 # NumPy data
 *.npy
 
+#csv data 
+*.csv
+
+
 # Python cache
 __pycache__/
 *.pyc
