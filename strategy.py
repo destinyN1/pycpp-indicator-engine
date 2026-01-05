@@ -19,10 +19,14 @@ def moving_average_crossover_strategy(fast_ma, slow_ma):
 
     return signals
 
+def run_strategy(file_path):
+    close_prices, sma_fast, sma_slow, ema_fast, ema_slow =indicators.run_indicators(file_path)
+    return close_prices, sma_fast, sma_slow, ema_fast, ema_slow
+
 import indicators
 
 if __name__ == "__main__":
-    close_prices, sma_fast, sma_slow, ema_fast, ema_slow = indicators.run_indicators()    
+    close_prices, sma_fast, sma_slow, ema_fast, ema_slow = indicators.run_indicators('/home/destiny/Programming/Kraken_OHLCVT/1INCHEUR_1440.csv')    
     sma_signals = moving_average_crossover_strategy(sma_fast, sma_slow)
     ema_signals = moving_average_crossover_strategy(ema_fast, ema_slow)
 

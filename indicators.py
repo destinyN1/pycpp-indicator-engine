@@ -50,8 +50,8 @@ def plot_close_prices_vs_ema(close_prices, ema):
     plt.show()
 
 
-def run_indicators():
-    close_prices = import_close_prices('/home/destiny/Programming/Kraken_OHLCVT/1INCHEUR_1440.csv')
+def run_indicators(file_path):
+    close_prices = import_close_prices(file_path) #needs to be chnaged to variable path for cli tool
     sma_fast= simple_moving_average(close_prices, 10) #sma_fast/slow, ema_fast/slow functions need to be imported into strategy.py
     sma_slow= simple_moving_average(close_prices, 100)
     ema_fast= exponential_moving_average(close_prices, 10)
@@ -60,7 +60,7 @@ def run_indicators():
     return close_prices, sma_fast, sma_slow, ema_fast, ema_slow
 
 if __name__ == "__main__":
-    close_prices, sma_fast, sma_slow, ema_fast, ema_slow = run_indicators()  
+    close_prices, sma_fast, sma_slow, ema_fast, ema_slow = run_indicators('/home/destiny/Programming/Kraken_OHLCVT/1INCHEUR_1440.csv')
 
 
     #save sma_10/ema_10 to a npy file
