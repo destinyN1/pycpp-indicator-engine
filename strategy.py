@@ -30,6 +30,10 @@ if __name__ == "__main__":
     sma_signals = moving_average_crossover_strategy(sma_fast, sma_slow)
     ema_signals = moving_average_crossover_strategy(ema_fast, ema_slow)
 
+    #save signals to npy files
+    np.save('./sma_signals.npy', np.array(sma_signals))
+    np.save('./ema_signals.npy', np.array(ema_signals))
+
     # Plot SMA + crossover markers
     plt.figure(figsize=(12, 6))
     plt.plot(sma_fast, label='SMA Fast')
