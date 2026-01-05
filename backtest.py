@@ -45,5 +45,7 @@ if __name__ == "__main__":
     #import close prices
     close_prices = np.load('./close_prices.npy')
 
-    positions = compute_positions(sma_signals)
-    print("Positions based on SMA signals:", positions)
+    sma_positions = compute_positions(sma_signals)
+    print("Positions based on SMA signals:", sma_positions)
+    ema_positions = compute_positions(ema_signals)
+    print("Positions based on EMA signals:", ema_positions)
