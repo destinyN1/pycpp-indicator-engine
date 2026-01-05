@@ -2,6 +2,8 @@ import numpy as np
 #implement a simple moving average indicator
 #import function from loadata.py (create_close_price_numpy_array)
 
+import load_data
+
 
 def simple_moving_average(data, window_size):
     #import close prices here
@@ -22,9 +24,11 @@ def exponential_moving_average(data, window_size):
 
 #import close prices here to have them returned
 def import_close_prices(file_path):
+
+    load_data.create_close_price_array(file_path)
     
     #read numpy array from npy file
-    close_prices = np.load(file_path)
+    close_prices = np.load('./close_prices.npy')
     return close_prices
    
 
@@ -44,21 +48,10 @@ def plot_close_prices_vs_ema(close_prices, ema):
     plt.legend()
     plt.show()
 
-def compare_lengths_sma_close_prices(close_prices, sma):
-    len_close = len(close_prices)
-    len_sma = len(sma)
-    print(f"Length of Close Prices: {len_close}")
-    print(f"Length of SMA: {len_sma}")
-    if len_close > len_sma:
-        print(f"Close Prices is longer by {len_close - len_sma} elements.")
-    elif len_sma > len_close:
-        print(f"SMA is longer by {len_sma - len_close} elements.")
-    else:
-        print("Both arrays are of equal length.")
 
 
 if __name__ == "__main__":
-    close_prices = import_close_prices('/home/destiny/Programming/pycpp-indicator-engine/close_prices.npy') 
+    close_prices = import_close_prices('/home/destiny/Programming/Kraken_OHLCVT/1INCHEUR_1440.csv') 
     sma_fast= simple_moving_average(close_prices, 10) #sma_fast/slow, ema_fast/slow functions need to be imported into strategy.py
     sma_slow= simple_moving_average(close_prices, 100)
     ema_fast= exponential_moving_average(close_prices, 10)
@@ -68,10 +61,25 @@ if __name__ == "__main__":
     np.save('/home/destiny/Programming/pycpp-indicator-engine/ema_fast.npy', ema_fast)
     np.save('/home/destiny/Programming/pycpp-indicator-engine/sma_slow.npy', sma_slow)
     np.save('/home/destiny/Programming/pycpp-indicator-engine/ema_slow.npy', ema_slow)
-    #plot close prices vs sma and ema
-    plot_close_prices_vs_sma(close_prices, sma_fast)
-    plot_close_prices_vs_ema(close_prices, ema_fast)
-    plot_close_prices_vs_sma(close_prices, sma_slow)
-    plot_close_prices_vs_ema(close_prices, ema_slow)
-    #compare_lengths_sma_close_prices(close_prices_averaged, sma_10)
-    ##print("Simple Moving Average (10):", sma_10)
+    
+    # plot_close_prices_vs_sma(close_prices, sma_fast)
+    # plot_close_prices_vs_ema(close_prices, ema_fast)
+    # plot_close_prices_vs_sma(close_prices, sma_slow)
+    # plot_close_prices_vs_ema(close_prices, ema_slow)
+  
+  
+  
+  
+   
+
+# def compare_lengths_sma_close_prices(close_prices, sma):
+#     len_close = len(close_prices)
+#     len_sma = len(sma)
+#     print(f"Length of Close Prices: {len_close}")
+#     print(f"Length of SMA: {len_sma}")
+#     if len_close > len_sma:
+#         print(f"Close Prices is longer by {len_close - len_sma} elements.")
+#     elif len_sma > len_close:
+#         print(f"SMA is longer by {len_sma - len_close} elements.")
+#     else:
+#         print("Both arrays are of equal length.")
